@@ -71,25 +71,81 @@ string display(const Queue& q) {
 // =============================================================================
 // SOAL 1 — enqueue()                                                  35 poin
 // =============================================================================
+
 bool enqueue(Queue& q, int nomor) {
-    // TODO: kerjakan di sini
-    return false;
+    
+    Node* p = q.depan;
+
+    while (p != NULL) {
+        if (p->data == nomor) {
+            return false;
+        }
+
+        p = p->next;
+    }
+
+   
+    Node* baru = new Node;
+    baru->data = nomor;
+    baru->next = NULL;
+
+    
+    if (q.depan == NULL) {
+        q.depan = baru;
+        q.belakang = baru;
+    } else {
+        
+        q.belakang->next = baru;
+        q.belakang = baru;
+    }
+
+    return true;
 }
+
 
 // =============================================================================
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
+
 bool dequeue(Queue& q, int& nomor) {
-    // TODO: kerjakan di sini
-    return false;
+    
+    if (q.depan == NULL) {
+        return false;
+    }
+
+
+    Node* hapus = q.depan;
+ 
+    nomor = hapus->data;
+    
+    q.depan = q.depan->next;
+
+    if (q.depan == NULL) {
+        q.belakang = NULL;
+    }
+    delete hapus;
+
+    return true;
 }
+
 
 // =============================================================================
 // SOAL 3 — clear()                                                    25 poin
 // =============================================================================
+
 void clear(Queue& q) {
-    // TODO: kerjakan di sini
+    Node* bantu = q.depan;
+
+    while (bantu != NULL) {
+        Node* hapus = bantu;
+        bantu = bantu->next;
+        delete hapus;
+    }
+
+    q.depan = NULL;
+    q.belakang = NULL;
 }
+
 
 // =============================================================================
 // MAIN() — program utama. TIDAK DINILAI, BEBAS DIUBAH.
